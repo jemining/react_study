@@ -14,7 +14,9 @@
     function App() {
         const [count, setCount] = React.useState(0);
         const clickEvent = () => {
-            setCount(count + 1);
+            // setCount(count + 1);
+            //count 변수가 원하는 값이 아닐 수 있으므로 변경
+            setCount((current) => current + 1);
         };
         return (
         <div>
