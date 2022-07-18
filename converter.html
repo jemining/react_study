@@ -11,7 +11,7 @@
 </body>
 <script type="text/babel">
     const root = document.getElementById("root");
-    function App() {
+    function Minute_hour() {
         const [minutes, setMinute] = React.useState();
         const [hours, setHour] = React.useState();
         const minuteConvert = (ev) =>{
@@ -24,12 +24,50 @@
         };
         return (
         <div>
-            <h1>Converter</h1>
+            <h1>Minute Converter</h1>
             <span>Minute </span>
             <input type="number" onChange={minuteConvert} value={minutes}/>
             <div></div>
             <span>Hour </span>
             <input type="number" onChange={hourConvert} value={hours}/>
+        </div>
+        )};
+    function Byte_kbyte() {
+        const [byte, setByte] = React.useState();
+        const [kByte, setKbyte] = React.useState();
+        const byteConverter = (ev) =>{
+            setByte(ev.target.value);
+            setKbyte(Math.floor(ev.target.value / 1024));
+        };
+        const KbyteConverter = (ev) =>{
+            setKbyte(ev.target.value);
+            setByte(Math.floor(ev.target.value * 1024));
+        };
+        return (
+        <div>
+            <h1>Byte Converter</h1>
+            <span>Byte </span>
+            <input type="number" onChange={byteConverter} value={byte}/>
+            <div></div>
+            <span>KByte </span>
+            <input type="number" onChange={KbyteConverter} value={kByte}/>
+        </div>
+        )};
+    function App() {
+        const [index, setIndex] = React.useState();
+        const onSelect = (ev) =>{
+            setIndex(ev.target.value);
+        }
+        return (
+        <div>
+            <h1>Main Converter</h1>
+            <select onChange={onSelect}>
+                <option value="0">Choose Converter</option>    
+                <option value="1">Minute Converter</option>    
+                <option value="2">Byte Converter</option>
+            </select>
+            {index == "1"? <Minute_hour/> : null}
+            {index == "2"? <Byte_kbyte/> : null}
         </div>
         )};
     ReactDOM.render(<App/>, root);
