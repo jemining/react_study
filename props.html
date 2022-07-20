@@ -2,8 +2,9 @@
 <html>
 <head>
     <title>Page Title</title>
-    <script src='https://unpkg.com/react@17.0.2/umd/react.production.min.js'></script>
+    <script src='https://unpkg.com/react@17.0.2/umd/react.development.js'></script>
     <script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
@@ -11,16 +12,28 @@
 </body>
 <script type="text/babel">
     const root = document.getElementById("root");
-    function Btn({btn_name, big}) {
-        return <button style={{fontSize: big? 20 : 15,}}>
+    function Btn({btn_name, changeValue, fontSize = 12}) {
+        console.log(`${btn_name} render`);
+        return <button style={{fontSize: fontSize}} onClick={changeValue}>
             {btn_name}
             </button>
     }
+    const MemoriseBtn = React.memo(Btn);
+    Btn.propTypes ={
+        btn_name: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+        stringOnly: PropTypes.string
+    };
     function App() {
+        const [value, setValue] = React.useState("Save Changes");
+        const onClickEv = () => {
+            setValue("Reverse Changes");
+        }
         return (
         <div>
-            <Btn btn_name="Save Changes" big={true}/>
-            <Btn btn_name="Continue" big={false}/>
+            <MemoriseBtn btn_name={value} changeValue={onClickEv}/>
+            <MemoriseBtn btn_name={"Continue"} fontSize={16} stringOnly={"string"}/>
+            <Btn btn_name={"btn"} fontSize={12} stringOnly={16}/>
         </div>
         )};
     ReactDOM.render(<App/>, root);
